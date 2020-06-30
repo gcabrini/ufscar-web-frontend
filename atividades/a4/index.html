@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jogo de digitação</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="wrapper">
+        <h1 class="header__title">Jogo de digitação</h1>
+      </div>
+    </header>
+
+    <section class="content">
+      <div class="wrapper">
+        <div class="content__description">
+          <p>Esse é um desafio para testar a velocidade de sua digitação.</p>
+
+          <p>Regras:</p>
+          <ul>
+            <li>
+              O desafio dura no máximo 2 minutos.
+            </li>
+            <li>O contador inicia assim que você iniciar a digitação.</li>
+            <li>
+              O contador parará assim que você digitar o texto corretamente.
+            </li>
+          </ul>
+        </div>
+
+        <div class="content__text">
+          <div class="content__text__timer">
+            <p id="challenge-timer"></p>
+          </div>
+
+          <div class="content__text__challenge">
+            <p>Digite o texto abaixo:</p>
+            <p id="challenge-text">Esse é um texto de exemplo</p>
+          </div>
+
+          <textarea
+            id="challenge-input"
+            class="content__text__input"
+            name="text"
+          ></textarea>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">Desenvolvido por Guilherme Cabrini da Silva</footer>
+
+    <script src="index.js"></script>
+  </body>
+</html>
