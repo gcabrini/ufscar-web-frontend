@@ -1,12 +1,21 @@
 (() => {
   const ONE_MINUTE_IN_SECONDS = 60;
   const MAX_CHALLENGE_TIME = ONE_MINUTE_IN_SECONDS * 2;
+  const LAST_LEVEL = 4;
+
+  const levels = [
+    "Esse é um texto de exemplo.",
+    "Esse é um texto de exemplo 2.",
+    "Esse é um texto de exemplo 3.",
+    "Esse é um texto de exemplo 4.",
+  ];
 
   const challenge = {
     started: false,
     interval: null,
     maxTime: MAX_CHALLENGE_TIME,
-    challengeText: "Esse é um texto de exemplo.",
+    currentLevel: 1,
+    challengeText: "",
     elements: {
       timer: document.getElementById("challenge-timer"),
       text: document.getElementById("challenge-text"),
@@ -15,6 +24,7 @@
       exitButton: document.getElementById("challenge-exit-button"),
       information: document.getElementById("challenge-information"),
       gameplay: document.getElementById("challenge-gameplay"),
+      level: document.getElementById("challenge-level"),
     },
   };
 
@@ -66,16 +76,36 @@
     challenge.maxTime = value;
   }
 
+  function setTextContent(element, value) {
+    element.textContent = value;
+  }
+
   function setTimer(value) {
     const { timer } = getElements();
 
-    timer.textContent = value;
+    setTextContent(timer, value);
   }
 
-  function setText(value) {
+  function setText(currentLevel) {
     const { text } = getElements();
+    const value = levels[currentLevel - 1];
 
-    text.textContent = value;
+    challenge.challengeText = value;
+    setTextContent(text, value);
+  }
+
+  function setLevel(value) {
+    const { level } = getElements();
+
+    challenge.currentLevel = value;
+    setTextContent(level, value);
+  }
+
+  function clearAndFocusOnInput() {
+    const { input } = getElements();
+
+    input.value = "";
+    input.focus();
   }
 
   function typedTextMatchesToChallengeText() {
@@ -98,23 +128,9 @@
     clearInterval(challenge.interval);
   }
 
-  function startChallenge() {
-    const { gameplay, input, information, startButton, timer } = getElements();
-
-    challenge.started = true;
-
-    toggleElementDisabled(startButton, { disabled: true });
-    setText(challenge.challengeText);
-    toggleElementVisibility(information, { hide: true });
-    toggleElementVisibility(gameplay, { show: true });
-
-    input.value = "";
-    input.focus();
-
-    setMaxTime(MAX_CHALLENGE_TIME);
-    setTimer(getFormmatedTime(challenge.maxTime));
-
+  function initTimerInterval() {
     clearInterval(challenge.interval);
+
     challenge.interval = setInterval(() => {
       if (challenge.maxTime === 0) {
         looseChallenge();
@@ -123,6 +139,25 @@
 
       setTimer(getFormmatedTime(--challenge.maxTime));
     }, 1000);
+  }
+
+  function startChallenge() {
+    const { gameplay, information, startButton, timer } = getElements();
+
+    challenge.started = true;
+
+    toggleElementDisabled(startButton, { disabled: true });
+    toggleElementVisibility(information, { hide: true });
+    toggleElementVisibility(gameplay, { show: true });
+
+    clearAndFocusOnInput();
+
+    setText(1);
+    setLevel(1);
+    setMaxTime(MAX_CHALLENGE_TIME);
+    setTimer(getFormmatedTime(challenge.maxTime));
+
+    initTimerInterval();
   }
 
   function stopChallenge() {
@@ -145,6 +180,15 @@
     resetChallenge();
   }
 
+  function goToNextLevel() {
+    clearAndFocusOnInput();
+
+    const nextLevel = challenge.currentLevel + 1;
+
+    setText(nextLevel);
+    setLevel(nextLevel);
+  }
+
   function wonChallenge() {
     const { timer } = getElements();
 
@@ -155,6 +199,10 @@
 
   function looseChallenge() {
     playAgain(`Você não completou o desafio... Deseja tentar novamente?`);
+  }
+
+  function completeLastLevel() {
+    return challenge.currentLevel === LAST_LEVEL;
   }
 
   function initListeners() {
@@ -170,7 +218,12 @@
 
     input.addEventListener("keyup", () => {
       if (typedTextMatchesToChallengeText()) {
-        wonChallenge();
+        if (completeLastLevel()) {
+          wonChallenge();
+          return;
+        }
+
+        goToNextLevel();
       }
     });
 
