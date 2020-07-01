@@ -4,58 +4,99 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Jogo de digitação</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=MuseoModerno:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <header class="header">
-      <div class="wrapper">
-        <h1 class="header__title">Jogo de digitação</h1>
-      </div>
-    </header>
+    <div class="main">
+      <header>
+        <div class="wrapper">
+          <h1 class="bold">Jogo de digitação</h1>
+        </div>
+      </header>
 
-    <section class="content">
-      <div class="wrapper">
-        <div class="content__description">
-          <p>Esse é um desafio para testar a velocidade de sua digitação.</p>
+      <section class="information" id="challenge-information">
+        <div class="wrapper">
+          <p class="challenge__text">
+            Esse é um desafio para testar a velocidade de sua digitação.
+          </p>
 
-          <p>Regras:</p>
+          <p class="challenge__text bold">Regras:</p>
+
           <ul>
             <li>
-              O desafio dura no máximo 2 minutos.
+              <p class="challenge__text">
+                O desafio dura no máximo 2 minutos.
+              </p>
             </li>
+
             <li>
-              O texto a ser digitado aparecerá assim que você iniciar o desafio.
+              <p class="challenge__text">
+                O texto a ser digitado aparecerá assim que você iniciar o
+                desafio.
+              </p>
             </li>
+
             <li>
-              O contador parará assim que você digitar o texto corretamente.
+              <p class="challenge__text">
+                O contador parará assim que você digitar o texto corretamente.
+              </p>
             </li>
           </ul>
 
-          <button id="challenge-start-button" type="button">
-            Iniciar desafio
-          </button>
+          <div class="challenge__actions">
+            <button
+              id="challenge-start-button"
+              class="challenge__button"
+              type="button"
+            >
+              Iniciar desafio
+            </button>
+          </div>
         </div>
+      </section>
 
-        <div class="content__text">
-          <div class="content__text__timer">
-            <p id="challenge-timer"></p>
+      <section class="challenge" id="challenge-gameplay">
+        <div class="wrapper">
+          <div>
+            <p class="challenge__timer bold" id="challenge-timer"></p>
           </div>
 
-          <div class="content__text__challenge">
-            <p>Digite o texto abaixo:</p>
-            <p id="challenge-text"><< O texto aparecerá aqui >></p>
+          <div>
+            <p class="challenge__text bold">Digite o texto abaixo:</p>
+            <p class="challenge__text-box" id="challenge-text"></p>
           </div>
 
           <textarea
             id="challenge-input"
-            class="content__text__input"
+            class="challenge__input"
             name="text"
           ></textarea>
-        </div>
-      </div>
-    </section>
 
-    <footer class="footer">Desenvolvido por Guilherme Cabrini da Silva</footer>
+          <div class="challenge__actions">
+            <button
+              id="challenge-exit-button"
+              class="challenge__button"
+              type="button"
+            >
+              Desistir
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <div class="wrapper">
+          <p>Desenvolvido por Guilherme Cabrini da Silva</p>
+        </div>
+      </footer>
+
+      <div class="modal"></div>
+    </div>
 
     <script src="index.js"></script>
   </body>

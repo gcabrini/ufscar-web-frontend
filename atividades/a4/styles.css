@@ -1,0 +1,121 @@
+:root {
+  --primary-color: #596f52;
+  --secondary-color: #272339;
+  --background-color: #e8e7c8;
+  --opacity-background: #0009;
+  --light-color: #fff;
+  --radius: 3px;
+  --font-family: "MuseoModerno", cursive;
+  --spacing: 10px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--secondary-color);
+  font-family: var(--font-family);
+}
+
+ul {
+  margin-left: 0;
+  padding-left: 0;
+}
+
+li {
+  list-style: none;
+}
+
+/* Helpers */
+.bold {
+  font-weight: 700;
+}
+
+/* Main styles */
+.main {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.wrapper {
+  padding-right: var(--spacing);
+  padding-left: var(--spacing);
+}
+
+/* Challenge */
+.challenge__actions {
+  margin: calc(var(--spacing) * 4) 0;
+}
+
+.challenge__text-box {
+  border-radius: var(--radius);
+  color: var(--secondary-color);
+  background-color: var(--light-color);
+  border: 1px solid;
+  pointer-events: none;
+}
+
+.challenge__text {
+  font-size: 0.875rem;
+}
+
+.challenge__timer {
+  border-radius: var(--radius);
+  color: var(--light-color);
+  font-size: 1.2rem;
+  background-color: var(--opacity-background);
+  margin: 0;
+}
+
+.challenge__button {
+  border: 1px solid var(--primary-color);
+  background-color: var(--primary-color);
+  border-radius: var(--radius);
+  color: var(--light-color);
+  font-family: var(--font-family);
+  padding: calc(var(--spacing) / 2) calc(var(--spacing) * 2);
+  border: 0;
+  cursor: pointer;
+}
+
+.challenge__button:focus,
+.challenge__button:hover {
+  opacity: 0.8;
+}
+
+.challenge__input {
+  border: 1px solid var(--primary-color);
+  border-radius: var(--radius);
+  padding: var(--spacing);
+  width: 100%;
+  min-width: 300px;
+  min-height: 100px;
+}
+
+/* Sections */
+.information {
+  display: block;
+}
+
+.challenge {
+  display: none;
+}
+
+/* Footer */
+.footer {
+}

@@ -1,16 +1,20 @@
 (() => {
   const ONE_MINUTE_IN_SECONDS = 60;
+  const MAX_CHALLENGE_TIME = ONE_MINUTE_IN_SECONDS * 2;
 
   const challenge = {
     started: false,
     interval: null,
-    maxTime: ONE_MINUTE_IN_SECONDS * 2,
+    maxTime: MAX_CHALLENGE_TIME,
     challengeText: "Esse é um texto de exemplo.",
     elements: {
       timer: document.getElementById("challenge-timer"),
       text: document.getElementById("challenge-text"),
       input: document.getElementById("challenge-input"),
       startButton: document.getElementById("challenge-start-button"),
+      exitButton: document.getElementById("challenge-exit-button"),
+      information: document.getElementById("challenge-information"),
+      gameplay: document.getElementById("challenge-gameplay"),
     },
   };
 
@@ -22,8 +26,28 @@
     return challenge.elements;
   }
 
-  function disableElement(element) {
-    element.setAttribute("disabled", true);
+  function toggleElementDisabled(element, { disabled, enabled } = {}) {
+    if (disabled) {
+      element.setAttribute("disabled", true);
+      return;
+    }
+
+    if (enabled) {
+      element.removeAttribute("disabled");
+      return;
+    }
+  }
+
+  function toggleElementVisibility(element, { hide, show } = {}) {
+    if (hide) {
+      element.style.display = "none";
+      return;
+    }
+
+    if (show) {
+      element.style.display = "block";
+      return;
+    }
   }
 
   function padLeftWithTwoZeros(value = "") {
@@ -36,6 +60,10 @@
     const seconds = Math.round((time - minutes) * ONE_MINUTE_IN_SECONDS);
 
     return `${padLeftWithTwoZeros(minutes)}:${padLeftWithTwoZeros(seconds)}`;
+  }
+
+  function setMaxTime(value) {
+    challenge.maxTime = value;
   }
 
   function setTimer(value) {
@@ -56,17 +84,40 @@
     return challenge.challengeText === input.value;
   }
 
-  function startChallenge() {
-    const { timer, startButton } = getElements();
+  function resetChallenge() {
+    const { gameplay, information, startButton } = getElements();
 
-    challenge.started = true;
-    disableElement(startButton);
-    setText(challenge.challengeText);
+    setMaxTime(MAX_CHALLENGE_TIME);
     setTimer(getFormmatedTime(challenge.maxTime));
 
+    toggleElementVisibility(gameplay, { hide: true });
+    toggleElementVisibility(information, { show: true });
+
+    toggleElementDisabled(startButton, { enabled: true });
+
+    clearInterval(challenge.interval);
+  }
+
+  function startChallenge() {
+    const { gameplay, input, information, startButton, timer } = getElements();
+
+    challenge.started = true;
+
+    toggleElementDisabled(startButton, { disabled: true });
+    setText(challenge.challengeText);
+    toggleElementVisibility(information, { hide: true });
+    toggleElementVisibility(gameplay, { show: true });
+
+    input.value = "";
+    input.focus();
+
+    setMaxTime(MAX_CHALLENGE_TIME);
+    setTimer(getFormmatedTime(challenge.maxTime));
+
+    clearInterval(challenge.interval);
     challenge.interval = setInterval(() => {
       if (challenge.maxTime === 0) {
-        stopChallenge();
+        looseChallenge();
         return;
       }
 
@@ -79,12 +130,39 @@
 
     challenge.started = false;
 
-    disableElement(input);
+    toggleElementDisabled(input, { disabled: true });
     clearInterval(challenge.interval);
   }
 
+  function playAgain(message) {
+    const confirm = window.confirm(message);
+
+    if (confirm) {
+      startChallenge();
+      return;
+    }
+
+    resetChallenge();
+  }
+
+  function wonChallenge() {
+    const { timer } = getElements();
+
+    playAgain(
+      `Você completou o desafio em ${timer.textContent}. Deseja jogar novamente?`
+    );
+  }
+
+  function looseChallenge() {
+    playAgain(`Você não completou o desafio... Deseja tentar novamente?`);
+  }
+
   function initListeners() {
-    const { input, startButton } = getElements();
+    const { input, exitButton, startButton } = getElements();
+
+    exitButton.addEventListener("click", () => {
+      resetChallenge();
+    });
 
     startButton.addEventListener("click", () => {
       startChallenge();
@@ -92,9 +170,12 @@
 
     input.addEventListener("keyup", () => {
       if (typedTextMatchesToChallengeText()) {
-        stopChallenge();
+        wonChallenge();
       }
     });
+
+    input.addEventListener("paste", (event) => event.preventDefault());
+    input.addEventListener("drop", (event) => event.preventDefault());
   }
 
   function init() {
