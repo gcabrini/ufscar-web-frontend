@@ -1,6 +1,7 @@
 # Ufscar Web - Frontend
 
-Repositório com os exercícios propostos no módulo de desenvolvimento frontend.
+Repositório com os exercícios propostos no módulo de desenvolvimento frontend.  
+Publicado em: https://gcabrini.github.io/ufscar-web-frontend
 
 # Atividades
 
