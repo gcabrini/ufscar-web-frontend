@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jogo de digitação</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=MuseoModerno:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="main">
+      <header>
+        <div class="wrapper">
+          <h1 class="bold">Jogo de digitação</h1>
+        </div>
+      </header>
+
+      <section class="information" id="challenge-information">
+        <div class="wrapper">
+          <p class="challenge__text">
+            Esse é um desafio para testar a velocidade de sua digitação.
+          </p>
+
+          <p class="challenge__text bold">Regras:</p>
+
+          <ul>
+            <li>
+              <p class="challenge__text">
+                O desafio dura no máximo 2 minutos.
+              </p>
+            </li>
+
+            <li>
+              <p class="challenge__text">
+                O texto a ser digitado aparecerá assim que você iniciar o
+                desafio.
+              </p>
+            </li>
+
+            <li>
+              <p class="challenge__text">
+                O contador parará assim que você digitar o texto corretamente.
+              </p>
+            </li>
+          </ul>
+
+          <div class="challenge__language">
+            <p class="challenge__text bold">Escolha um idioma:</p>
+
+            <div class="challenge__language__options">
+              <label class="challenge__language__item">
+                <input
+                  checked="checked"
+                  type="radio"
+                  name="lang"
+                  value="pt-br"
+                />
+                <img
+                  src="assets/pt-br.svg"
+                  width="60"
+                  alt="Imagem arredondada da bandeira do Brasil"
+                />
+              </label>
+
+              <label class="challenge__language__item">
+                <input type="radio" name="lang" value="us" />
+                <img
+                  src="assets/us.svg"
+                  width="60"
+                  alt="Imagem arredondada da bandeira dos Estados Unidos da América"
+                />
+              </label>
+
+              <label class="challenge__language__item">
+                <input type="radio" name="lang" value="es" />
+                <img
+                  src="assets/es.svg"
+                  width="60"
+                  alt="Imagem arredondada da bandeira da Esapnha"
+                />
+              </label>
+            </div>
+          </div>
+
+          <div class="challenge__actions">
+            <button
+              id="challenge-start-button"
+              class="challenge__button"
+              type="button"
+            >
+              Iniciar desafio
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="challenge" id="challenge-gameplay">
+        <div class="wrapper">
+          <h2>Nível #<span id="challenge-level"></span></h2>
+
+          <p class="challenge__timer bold" id="challenge-timer"></p>
+
+          <p class="challenge__text bold">Digite o texto abaixo:</p>
+          <p class="challenge__text-box" id="challenge-text"></p>
+
+          <textarea
+            id="challenge-input"
+            class="challenge__input"
+            name="text"
+          ></textarea>
+
+          <div class="challenge__actions">
+            <button
+              id="challenge-exit-button"
+              class="challenge__button"
+              type="button"
+            >
+              Desistir
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <div class="wrapper">
+          <p>Desenvolvido por Guilherme Cabrini da Silva</p>
+        </div>
+      </footer>
+
+      <div class="modal"></div>
+    </div>
+
+    <script src="index.js"></script>
+  </body>
+</html>
