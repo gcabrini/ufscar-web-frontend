@@ -66,8 +66,11 @@ li {
   border-radius: var(--radius);
   color: var(--secondary-color);
   background-color: var(--light-color);
+  padding: calc(var(--spacing) / 2);
   border: 1px solid;
   pointer-events: none;
+  max-width: 320px;
+  font-size: 0.875rem;
 }
 
 .challenge__text {
@@ -105,6 +108,22 @@ li {
   width: 100%;
   min-width: 300px;
   min-height: 100px;
+}
+
+.challenge__language__options {
+  display: flex;
+  justify-content: space-around;
+}
+
+.challenge__language__item {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.challenge__language__item > input {
+  margin-right: var(--spacing);
+  cursor: pointer;
 }
 
 /* Sections */

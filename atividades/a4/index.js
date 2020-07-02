@@ -3,19 +3,34 @@
   const MAX_CHALLENGE_TIME = ONE_MINUTE_IN_SECONDS * 2;
   const LAST_LEVEL = 4;
 
-  const levels = [
-    "Esse é um texto de exemplo.",
-    "Esse é um texto de exemplo 2.",
-    "Esse é um texto de exemplo 3.",
-    "Esse é um texto de exemplo 4.",
-  ];
+  const levels = {
+    "pt-br": [
+      "Esse é o primeiro level do jogo, boa sorte!",
+      "Agora as coisas começam a ficar um pouco mais difíceis.",
+      "Se bem que você está indo muito bem... Mas será que conseguirá terminar esse jogo?",
+      "Bom, esse é o último nível! Será que você conseguirá terminar a tempo? 3u 4cr3d1t0 qu3 n40... S3 c0ns3gu1r, b3m v1nd0 40 t1m3!",
+    ],
+    us: [
+      "This is the first level of the game, good luck!",
+      "Now things are starting to get a little more difficult.",
+      "Although you are doing very well... But will you be able to finish this game?",
+      "Well, this is the last level, but will you be able to finish in time? 1 b3l13v3 n0t...1f y0u c4n, w3lc0m3 t0 th3 t34m!",
+    ],
+    es: [
+      "Este es el primer nivel del juego, buena suerte!",
+      "Ahora las cosas comienzan a ponerse un poco más difíciles.",
+      "Aunque lo estás haciendo muy bien... Podrás terminar este juego?",
+      "Bueno, este es el último nivel, pero podrás terminar a tiempo? Cr30 qu3 n0... S1 pu3d3s, b13nv3n1d0 4l 3qu1p0!",
+    ],
+  };
 
   const challenge = {
     started: false,
     interval: null,
     maxTime: MAX_CHALLENGE_TIME,
     currentLevel: 1,
-    challengeText: "",
+    text: "",
+    language: document.querySelector("[name='lang']:checked").value,
     elements: {
       timer: document.getElementById("challenge-timer"),
       text: document.getElementById("challenge-text"),
@@ -72,6 +87,10 @@
     return `${padLeftWithTwoZeros(minutes)}:${padLeftWithTwoZeros(seconds)}`;
   }
 
+  function setLanguage() {
+    challenge.language = document.querySelector("[name='lang']:checked").value;
+  }
+
   function setMaxTime(value) {
     challenge.maxTime = value;
   }
@@ -86,11 +105,17 @@
     setTextContent(timer, value);
   }
 
+  function getCurrentLevelText(currentLevel) {
+    const { language } = challenge;
+
+    return levels[language][currentLevel - 1];
+  }
+
   function setText(currentLevel) {
     const { text } = getElements();
-    const value = levels[currentLevel - 1];
+    const value = getCurrentLevelText(currentLevel);
 
-    challenge.challengeText = value;
+    challenge.text = value;
     setTextContent(text, value);
   }
 
@@ -111,7 +136,7 @@
   function typedTextMatchesToChallengeText() {
     const { input } = getElements();
 
-    return challenge.challengeText === input.value;
+    return challenge.text === input.value;
   }
 
   function resetChallenge() {
@@ -152,6 +177,7 @@
 
     clearAndFocusOnInput();
 
+    setLanguage();
     setText(1);
     setLevel(1);
     setMaxTime(MAX_CHALLENGE_TIME);
