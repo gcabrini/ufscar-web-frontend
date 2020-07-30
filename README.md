@@ -9,3 +9,4 @@ Publicado em: https://gcabrini.github.io/ufscar-web-frontend
 - [x] [A2 - Ajudando a desenvolver uma web para todos](atividades/a2/atividade-2.md)
 - [x] [A3 - Dominando o magnífico CSS](atividades/a3/atividade-3.md)
 - [x] [A4 - Minha primeira aplicação em JS](atividades/a4/atividade-4.md)
+- [ ] [A6 - Dominando os incríveis TS, GraphQL e Relay](atividades/a6/atividade-6.md)
